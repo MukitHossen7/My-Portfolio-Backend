@@ -20,6 +20,18 @@ const createProject = async (
 const getAllProjects = async () => {
   const projects = await prisma.project.findMany({
     select: {
+      id: true,
+      title: true,
+      slug: true,
+      description: true,
+      thumbnail: true,
+      frontendRepoUrl: true,
+      backendRepoUrl: true,
+      liveUrl: true,
+      features: true,
+      technology: true,
+      createdAt: true,
+      updatedAt: true,
       owner: {
         select: {
           id: true,

@@ -16,6 +16,7 @@ export const createProjectZodSchema = z.object({
   backendRepoUrl: z.string().url("Backend repo must be a valid URL").optional(),
   liveUrl: z.string().url("Live URL must be a valid URL").optional(),
   features: z.array(z.string()).optional(),
+  technology: z.array(z.string()).optional(),
 });
 
 export const updateProjectZodSchema = z.object({
@@ -36,4 +37,5 @@ export const updateProjectZodSchema = z.object({
   backendRepoUrl: z.string().url("Backend repo must be a valid URL").optional(),
   liveUrl: z.string().url("Live URL must be a valid URL").optional(),
   features: z.array(z.string()).optional(),
+  technology: z.array(z.string()).optional(),
 });

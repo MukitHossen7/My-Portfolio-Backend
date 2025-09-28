@@ -75,6 +75,10 @@ const getUserById = async (id: number) => {
       id: id,
     },
   });
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User profile not found");
+  }
   return user;
 };
 

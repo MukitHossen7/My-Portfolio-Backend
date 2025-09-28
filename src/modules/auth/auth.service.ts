@@ -1,0 +1,35 @@
+import { prisma } from "../../config/db";
+import AppError from "../../errorHelpers/AppError";
+import httpStatus from "http-status-codes";
+import bcrypt from "bcrypt";
+
+const createLogIn = async (email: string, password: string) => {
+  const user = await prisma.user.findUnique({
+    where: { email: email },
+  });
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  if (user.isStatus === "BLOCKED" || user.isStatus === "INACTIVE") {
+    throw new AppError(
+      403,
+      "Your account is not active. Please contact support."
+    );
+  }
+  if (user.isDeleted === true) {
+    throw new AppError(410, "This account has been deleted.");
+  }
+
+  const hashPassword = await bcrypt.compare(password, user.password as string);
+  if (!hashPassword) {
+    throw new AppError(401, "Invalid email or password");
+  }
+
+  return user;
+};
+
+export const authService = {
+  createLogIn,
+};

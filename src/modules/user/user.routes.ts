@@ -11,4 +11,7 @@ userRoute.post(
   userController.createUser
 );
 
+userRoute.get("/", userController.getAllUsers);
+userRoute.get("/:id", userController.getUserById);
+
 export default userRoute;

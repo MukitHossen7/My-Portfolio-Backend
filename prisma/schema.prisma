@@ -34,6 +34,7 @@ model User {
 model Blog {
   id         Int        @id @default(autoincrement())
   title      String
+  slug       String?    @unique
   excerpt    String?
   content    String
   thumbnail  String?
@@ -50,6 +51,7 @@ model Blog {
 model Project {
   id              Int      @id @default(autoincrement())
   title           String
+  slug            String?  @unique
   description     String
   thumbnail       String
   frontendRepoUrl String?

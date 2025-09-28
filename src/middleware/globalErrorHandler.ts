@@ -1,9 +1,7 @@
-import dotenv from "dotenv";
 import { NextFunction, Request, Response } from "express";
 import { Prisma } from "@prisma/client";
 import AppError from "../errorHelpers/AppError";
-
-dotenv.config();
+import config from "../config";
 
 interface IErrorSources {
   message: string;
@@ -65,7 +63,7 @@ export const globalErrorHandler = async (
     success: false,
     message,
     errorSources,
-    error: process.env.NODE_ENV === "development" ? error : null,
-    stack: process.env.NODE_ENV === "development" ? error.stack : null,
+    error: config.NODE_ENV === "development" ? error : null,
+    stack: config.NODE_ENV === "development" ? error.stack : null,
   });
 };

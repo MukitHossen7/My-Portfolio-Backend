@@ -2,6 +2,15 @@ import { prisma } from "../../config/db";
 import AppError from "../../errorHelpers/AppError";
 import httpStatus from "http-status-codes";
 import bcrypt from "bcrypt";
+import { User } from "@prisma/client";
+
+interface GoogleLoginPayload {
+  name: string;
+  email: string;
+  image?: string;
+  provider: string;
+  providerId: string;
+}
 
 const createLogIn = async (email: string, password: string) => {
   const user = await prisma.user.findUnique({
@@ -30,6 +39,35 @@ const createLogIn = async (email: string, password: string) => {
   return user;
 };
 
+const createLogInGoogle = async (
+  payload: GoogleLoginPayload
+): Promise<User> => {
+  const { name, email, image, provider, providerId } = payload;
+  if (!email) {
+    throw new AppError(404, "Email is required");
+  }
+
+  let user = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+
+  if (!user) {
+    user = await prisma.user.create({
+      data: {
+        name: name,
+        email: email,
+        picture: image,
+        provider: provider,
+        providerId: providerId,
+        isVerified: true,
+      },
+    });
+  }
+  return user;
+};
 export const authService = {
   createLogIn,
+  createLogInGoogle,
 };

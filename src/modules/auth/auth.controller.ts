@@ -3,15 +3,34 @@ import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status-codes";
 import { authService } from "./auth.service";
+import { generateToken } from "../../utils/jwt";
+import config from "../../config";
+import { setAuthCookie } from "../../utils/setCookie";
 
 const createLogIn = catchAsync(async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await authService.createLogIn(email, password);
+
+  const tokenPayload = {
+    email: user.email,
+    role: user.role,
+    id: user.id,
+  };
+  const accessToken = generateToken(
+    tokenPayload,
+    config.JWT_ACCESS_SECRET,
+    config.JWT_ACCESS_EXPIRATION
+  );
+
+  setAuthCookie(res, accessToken);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "User logged in successfully",
-    data: user,
+    data: {
+      accessToken: accessToken,
+      user: user,
+    },
   });
 });
 

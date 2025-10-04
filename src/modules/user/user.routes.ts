@@ -2,6 +2,8 @@ import express from "express";
 import { userController } from "./user.controller";
 import { zodValidateRequest } from "../../middleware/zodValidateRequest";
 import { createUserZodSchema } from "./user.zod.validation";
+import { checkAuth } from "../../middleware/checkAuth";
+import { Role } from "@prisma/client";
 
 const userRoute = express.Router();
 
@@ -12,6 +14,6 @@ userRoute.post(
 );
 
 userRoute.get("/", userController.getAllUsers);
-userRoute.get("/:id", userController.getUserById);
+userRoute.get("/:id", checkAuth(Role.ADMIN), userController.getUserById);
 
 export default userRoute;

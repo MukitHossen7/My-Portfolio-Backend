@@ -5,7 +5,6 @@ import httpStatus from "http-status-codes";
 import { blogService } from "./blog.service";
 
 const createBlog = catchAsync(async (req: Request, res: Response) => {
-  // const userId = req.user?.userId as string;
   const result = await blogService.createBlog(req.body);
 
   sendResponse(res, {

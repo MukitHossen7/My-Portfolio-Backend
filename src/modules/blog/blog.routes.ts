@@ -5,12 +5,15 @@ import {
   updateBlogZodSchema,
 } from "./blog.zod.validation";
 import { blogController } from "./blog.controller";
+import { checkAuth } from "../../middleware/checkAuth";
+import { Role } from "@prisma/client";
 
 const blogRoute = express.Router();
 
 //Create blog by Admin use checkAuth
 blogRoute.post(
   "/",
+  checkAuth(Role.ADMIN),
   zodValidateRequest(createBlogZodSchema),
   blogController.createBlog
 );
@@ -24,11 +27,12 @@ blogRoute.get("/:slug", blogController.getSingleBlog);
 //Create blog by Admin use checkAuth
 blogRoute.patch(
   "/:slug",
+  checkAuth(Role.ADMIN),
   zodValidateRequest(updateBlogZodSchema),
   blogController.updateBlog
 );
 
 ////Create blog by Admin use checkAuth
-blogRoute.delete("/:slug", blogController.deleteBlog);
+blogRoute.delete("/:slug", checkAuth(Role.ADMIN), blogController.deleteBlog);
 
 export default blogRoute;

@@ -4,17 +4,21 @@ import compression from "compression";
 import routes from "./routes/routes";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import notFound from "./middleware/notFound";
+import cookieParser from "cookie-parser";
+import config from "./config";
 const app = express();
 
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [config.FRONTEND_URL],
     credentials: true,
   })
 );
+app.use(cookieParser());
 app.use(compression());
 app.use(express.json());
+app.set("trust proxy", 1);
 
 //routes
 app.use("/api/v1", routes);

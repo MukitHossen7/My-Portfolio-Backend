@@ -5,20 +5,19 @@ import routes from "./routes/routes";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import notFound from "./middleware/notFound";
 import cookieParser from "cookie-parser";
-import config from "./config";
 const app = express();
 
 // Middleware
+app.use(express.json());
+app.use(cookieParser());
+app.use(compression());
 app.use(
   cors({
-    origin: [config.FRONTEND_URL],
+    origin: ["http://localhost:3000"],
     credentials: true,
   })
 );
-app.use(cookieParser());
-app.use(compression());
-app.use(express.json());
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 
 //routes
 app.use("/api/v1", routes);

@@ -17,8 +17,8 @@ const createLogIn = async (email: string, password: string) => {
     where: { email: email },
   });
 
-  if (!user) {
-    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  if (!user || user.role !== "ADMIN") {
+    throw new AppError(httpStatus.NOT_FOUND, "Invalid credentials");
   }
 
   if (user.isStatus === "BLOCKED" || user.isStatus === "INACTIVE") {

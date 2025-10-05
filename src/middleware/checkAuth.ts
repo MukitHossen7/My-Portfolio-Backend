@@ -23,6 +23,9 @@ export const checkAuth =
         throw new AppError(httpStatus.UNAUTHORIZED, "Invalid access token");
       }
 
+      if (verify_token.role !== "ADMIN") {
+        throw new AppError(403, "Forbidden - Admins only");
+      }
       const isExistUser = await prisma.user.findUnique({
         where: {
           email: verify_token.email,

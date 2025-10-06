@@ -13,7 +13,7 @@ const blogRoute = express.Router();
 //Create blog by Admin use checkAuth
 blogRoute.post(
   "/",
-  checkAuth(Role.ADMIN),
+  // checkAuth(Role.ADMIN),
   zodValidateRequest(createBlogZodSchema),
   blogController.createBlog
 );
@@ -33,6 +33,6 @@ blogRoute.patch(
 );
 
 ////Create blog by Admin use checkAuth
-blogRoute.delete("/:slug", checkAuth(Role.ADMIN), blogController.deleteBlog);
+blogRoute.delete("/:slug", blogController.deleteBlog);
 
 export default blogRoute;

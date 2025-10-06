@@ -18,10 +18,6 @@ const createBlog = async (payload: Prisma.BlogCreateInput): Promise<Blog> => {
 
 const getAllBlogs = async () => {
   const blogs = await prisma.blog.findMany({
-    where: {
-      status: "PUBLISHED",
-      isFeatured: true,
-    },
     include: {
       author: {
         select: {

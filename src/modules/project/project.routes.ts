@@ -13,7 +13,7 @@ const projectRoute = express.Router();
 //Create project by Admin use checkAuth
 projectRoute.post(
   "/",
-  checkAuth(Role.ADMIN),
+  // checkAuth(Role.ADMIN),
   zodValidateRequest(createProjectZodSchema),
   projectController.createProject
 );

@@ -12,9 +12,14 @@ export const createProjectZodSchema = z.object({
   frontendRepoUrl: z
     .string()
     .url("Frontend repo must be a valid URL")
-    .optional(),
-  backendRepoUrl: z.string().url("Backend repo must be a valid URL").optional(),
-  liveUrl: z.string().url("Live URL must be a valid URL").optional(),
+    .optional()
+    .nullable(),
+  backendRepoUrl: z
+    .string()
+    .url("Backend repo must be a valid URL")
+    .optional()
+    .nullable(),
+  liveUrl: z.string().url("Live URL must be a valid URL").optional().nullable(),
   features: z.array(z.string()).optional(),
   technology: z.array(z.string()).optional(),
 });

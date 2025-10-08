@@ -27,7 +27,7 @@ projectRoute.get("/:slug", projectController.getSingleProject);
 //Update project by Admin use checkAuth
 projectRoute.patch(
   "/:slug",
-  checkAuth(Role.ADMIN),
+  // checkAuth(Role.ADMIN),
   zodValidateRequest(updateProjectZodSchema),
   projectController.updateProject
 );
@@ -35,7 +35,7 @@ projectRoute.patch(
 //Delete project by Admin use checkAuth
 projectRoute.delete(
   "/:slug",
-  checkAuth(Role.ADMIN),
+  // checkAuth(Role.ADMIN),
   projectController.deleteProject
 );
 

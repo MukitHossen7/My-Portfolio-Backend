@@ -27,12 +27,12 @@ blogRoute.get("/:slug", blogController.getSingleBlog);
 //Create blog by Admin use checkAuth
 blogRoute.patch(
   "/:slug",
-  checkAuth(Role.ADMIN),
+  // checkAuth(Role.ADMIN),
   zodValidateRequest(updateBlogZodSchema),
   blogController.updateBlog
 );
 
-////Create blog by Admin use checkAuth
+//Delete blog by Admin use checkAuth
 blogRoute.delete("/:slug", blogController.deleteBlog);
 
 export default blogRoute;

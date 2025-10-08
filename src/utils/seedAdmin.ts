@@ -23,6 +23,8 @@ export const seedAdmin = async () => {
     const payload: Prisma.UserCreateInput = {
       name: "Mukit Hossen",
       email: config.ADMIN_EMAIL,
+      picture:
+        "https://i.pinimg.com/564x/6a/6b/72/6a6b72a2d5a5154b1ab70e341bff7dca.jpg",
       password: hashPassword,
       role: "ADMIN",
       isVerified: true,

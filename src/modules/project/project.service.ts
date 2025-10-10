@@ -76,7 +76,6 @@ const updateProject = async (
       slug: slug,
     },
   });
-
   if (!project) {
     throw new AppError(httpStatus.NOT_FOUND, "Project not found");
   }

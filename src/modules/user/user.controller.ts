@@ -3,6 +3,7 @@ import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status-codes";
 import { userServices } from "./user.service";
+import { JwtPayload } from "jsonwebtoken";
 
 const createUser = catchAsync(async (req: Request, res: Response) => {
   const user = await userServices.createUser(req.body);
@@ -24,9 +25,9 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getUserById = catchAsync(async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-  const user = await userServices.getUserById(id);
+const getMe = catchAsync(async (req: Request, res: Response) => {
+  const { email } = req.user as JwtPayload;
+  const user = await userServices.getMe(email);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -38,5 +39,5 @@ const getUserById = catchAsync(async (req: Request, res: Response) => {
 export const userController = {
   createUser,
   getAllUsers,
-  getUserById,
+  getMe,
 };

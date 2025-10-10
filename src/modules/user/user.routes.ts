@@ -14,6 +14,6 @@ userRoute.post(
 );
 
 userRoute.get("/", userController.getAllUsers);
-userRoute.get("/:id", checkAuth(Role.ADMIN), userController.getUserById);
+userRoute.get("/me", checkAuth(Role.ADMIN), userController.getMe);
 
 export default userRoute;

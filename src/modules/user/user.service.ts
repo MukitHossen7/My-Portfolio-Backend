@@ -56,7 +56,7 @@ const getAllUsers = async () => {
   return users;
 };
 
-const getUserById = async (id: number) => {
+const getMe = async (email: string) => {
   const user = await prisma.user.findUnique({
     select: {
       id: true,
@@ -72,7 +72,7 @@ const getUserById = async (id: number) => {
       updatedAt: true,
     },
     where: {
-      id: id,
+      email: email,
     },
   });
 
@@ -85,5 +85,5 @@ const getUserById = async (id: number) => {
 export const userServices = {
   createUser,
   getAllUsers,
-  getUserById,
+  getMe,
 };

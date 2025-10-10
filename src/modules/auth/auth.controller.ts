@@ -5,7 +5,7 @@ import httpStatus from "http-status-codes";
 import { authService } from "./auth.service";
 import { generateToken } from "../../utils/jwt";
 import config from "../../config";
-import { setAuthCookie } from "../../utils/setCookie";
+// import { setAuthCookie } from "../../utils/setCookie";
 
 const createLogIn = catchAsync(async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -21,8 +21,7 @@ const createLogIn = catchAsync(async (req: Request, res: Response) => {
     config.JWT_ACCESS_SECRET,
     config.JWT_ACCESS_EXPIRATION
   );
-
-  setAuthCookie(res, accessToken);
+  // setAuthCookie(res, accessToken);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

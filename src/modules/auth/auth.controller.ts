@@ -21,7 +21,11 @@ const createLogIn = catchAsync(async (req: Request, res: Response) => {
     config.JWT_ACCESS_SECRET,
     config.JWT_ACCESS_EXPIRATION
   );
-  // setAuthCookie(res, accessToken);
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

@@ -9,9 +9,10 @@ import { prisma } from "../config/db";
 export const checkAuth =
   (...authRoles: string[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Incoming cookies:", req.headers.cookie);
     try {
       const accessToken =
-        req.headers.authorization?.split(" ")[1] || req.cookies.accessToken;
+        req.cookies.accessToken || req.headers.authorization?.split(" ")[1];
       if (!accessToken) {
         throw new AppError(httpStatus.FORBIDDEN, "Access token is missing");
       }

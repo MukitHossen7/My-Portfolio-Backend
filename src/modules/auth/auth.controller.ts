@@ -26,7 +26,6 @@ const createLogIn = catchAsync(async (req: Request, res: Response) => {
     secure: true,
     sameSite: "none",
   });
-  console.log("Set cookie in logincontroller:", req.headers.cookie);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

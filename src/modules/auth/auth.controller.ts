@@ -16,12 +16,12 @@ const createLogIn = catchAsync(async (req: Request, res: Response) => {
     role: user.role,
     id: user.id,
   };
-  const accessToken = generateToken(
+  const token = generateToken(
     tokenPayload,
     config.JWT_ACCESS_SECRET,
     config.JWT_ACCESS_EXPIRATION
   );
-  res.cookie("accessToken", accessToken, {
+  res.cookie("token", token, {
     httpOnly: true,
     secure: true,
     sameSite: "none",
@@ -31,9 +31,23 @@ const createLogIn = catchAsync(async (req: Request, res: Response) => {
     success: true,
     message: "User logged in successfully",
     data: {
-      accessToken: accessToken,
+      token: token,
       user: user,
     },
+  });
+});
+
+const logOutUser = catchAsync(async (req: Request, res: Response) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User logged out successfully",
+    data: null,
   });
 });
 
@@ -49,5 +63,6 @@ const createLogInGoogle = catchAsync(async (req: Request, res: Response) => {
 
 export const authController = {
   createLogIn,
+  logOutUser,
   createLogInGoogle,
 };

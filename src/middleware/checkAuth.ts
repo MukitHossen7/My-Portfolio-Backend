@@ -10,13 +10,13 @@ export const checkAuth =
   (...authRoles: string[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const accessToken =
+      const token =
         req.cookies.token || req.headers.authorization?.split(" ")[1];
-      if (!accessToken) {
+      if (!token) {
         throw new AppError(httpStatus.FORBIDDEN, "Access token is missing");
       }
       const verify_token = verifyToken(
-        accessToken,
+        token,
         config.JWT_ACCESS_SECRET
       ) as JwtPayload;
 

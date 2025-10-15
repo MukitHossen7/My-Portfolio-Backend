@@ -72,7 +72,7 @@ npm run dev
 
 ## Project Structure
 
-```json
+```
 portfolio-backend/
 ├── src/
 │   ├── app/
